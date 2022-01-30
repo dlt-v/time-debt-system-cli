@@ -9,13 +9,12 @@ CLIC = cli_colors()
 class cli_cmds():
 
     def print_time(self):
-        self.__cls()
         now = datetime.now()
         print(f'{CLIC.CMT}It\'s {now.hour}:{now.minute}.')
+        CLIC.clear()
 
-    def help(self, clear_interface=True):
-        if clear_interface:
-            self.__cls()
+    def help(self):
+
         print(f'{CLIC.OKB}Available commands:')
         print(f'{CLIC.CMT}"time"{CLIC.CLR} - print current time')
         print(f'{CLIC.CMT}"help"{CLIC.CLR} - view available commands')
@@ -24,7 +23,7 @@ class cli_cmds():
 
     def header(self):
         self.__cls()
-        print(f'{CLIC.HDR}Welcome to TDS v0.1{CLIC.CLR}')
+        print(f'{CLIC.HDR}Welcome to TDS v0.1{CLIC.CLR}\n')
 
     def unknown_command(self):
         print(
