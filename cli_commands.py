@@ -32,6 +32,10 @@ class cli_cmds():
 
     def add_activity(self):
         new_activity = {}
+        print(f'{CLIC.CMT} Name / Comment: {CLIC.CLR}')
+        name = input('>')
+        new_activity.update({'name': name})
+
         print(f'{CLIC.CMT} Category of output activity: {CLIC.CLR}')
         print(f'1 - University')
         print(f'2 - Hobby programming')
@@ -54,7 +58,6 @@ class cli_cmds():
         print(f'{CLIC.CMT} Length (in hours): {CLIC.CLR}')
         length = float(input('>'))
         new_activity.update({'length': length})
-        print(new_activity)
         activity_tracker.add_activity(new_activity)
         self._current_balance = activity_tracker.return_balance()
 
