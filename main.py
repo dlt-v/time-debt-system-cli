@@ -1,47 +1,29 @@
 import sys
-from datetime import datetime
 
+from cli_commands import cli_cmds
+from cli_colors import cli_colors
 
-class CLI_colors():
-    HDR = '\033[95m'  # header color
-    OKB = '\033[94m'  # okay blue
-    OKC = '\033[96m'  # okay cyan
-    OKG = '\033[92m'  # okay green
-    WARNING = '\033[31m'  # warning red
-    CMT = '\033[93m'  # comment orange
-    FAIL = '\033[91m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
-    CLR = '\033[0m'  # clear color
-
-    def clear(self):
-        print(self.CLR)
-
-
-CLIC = CLI_colors()
-
-
-def print_main_menu():
-    print(f'{CLIC.OKB}Available commands:')
-    print(f'{CLIC.CMT}"time" - {CLIC.CLR}print current time')
-    print(f'{CLIC.CMT}"exit" - {CLIC.CLR}quit interface')
-    CLIC.clear()
+TDS = cli_cmds()
+CLIC = cli_colors()
 
 
 def main():
     program_status = True
-    print(f'{CLIC.HDR}Welcome to TDS v0.1')
-    print_main_menu()
+    TDS.header()
     CLIC.clear()
     while program_status:
-        print(f'{CLIC.CLR}Waiting for command...')
+        print(
+            f'{CLIC.CLR}Waiting for command... (Use "help" to see available commands.)')
         command = input()
         if command == 'exit':
+            print(f'{CLIC.OKG}Exiting program with flag 0.{CLIC.CLR}')
             program_status = False
         if command == 'time':
-            print(datetime.now())
-
-    print(f'{CLIC.OKG}Exiting program.{CLIC.CLR}')
+            TDS.print_time()
+        if command == 'help':
+            TDS.help()
+        else:
+            TDS.unknown_command()
 
 
 if __name__ == "__main__":
