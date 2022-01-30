@@ -7,6 +7,21 @@ CLIC = cli_colors()
 
 
 class cli_cmds():
+    _current_balance = 0
+
+    def header(self):
+        self.__cls()
+        print(f'{CLIC.HDR}TDS_CLI v0.1{CLIC.CLR}')
+        print(
+            f'Current balance is: {self.print_balance()}{CLIC.CLR}.\n')
+
+    def print_balance(self):
+        if self._current_balance == 0:
+            return f'{CLIC.CMT}0'
+        elif self._current_balance < 0:
+            return f'{CLIC.WRN}{self._current_balance}'
+        elif self._current_balance > 0:
+            return f'{CLIC.OKG}{self._current_balance}'
 
     def print_time(self):
         now = datetime.now()
@@ -20,10 +35,6 @@ class cli_cmds():
         print(f'{CLIC.CMT}"help"{CLIC.CLR} - view available commands')
         print(f'{CLIC.CMT}"exit"{CLIC.CLR} - quit interface')
         CLIC.clear()
-
-    def header(self):
-        self.__cls()
-        print(f'{CLIC.HDR}Welcome to TDS v0.1{CLIC.CLR}\n')
 
     def unknown_command(self):
         print(

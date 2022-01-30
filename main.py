@@ -10,6 +10,8 @@ CLIC = cli_colors()
 def main():
     program_status = True
     CLIC.clear()
+    TDS.header()
+
     while program_status:
 
         print(
