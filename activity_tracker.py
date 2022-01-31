@@ -1,13 +1,14 @@
 import json
+from cli_colors import cli_colors
+
+CLIC = cli_colors()
 
 
 class Tracker():
-    _activity_list = []
     _next_id = 0
+    _activity_list = []
 
     def add_activity(self, activity):
-
-        # new_json_data = self.read_json()
 
         new_activity = {
             'id': self._next_id,
@@ -18,8 +19,6 @@ class Tracker():
         self._next_id += 1
         self._activity_list.append(new_activity)
 
-        # self.write_json(new_json_data)
-
     def list_activities(self):
         for activity in self._activity_list:
             print(
@@ -27,7 +26,26 @@ class Tracker():
         print()
 
     def delete_activity(self, id):
-        pass
+        for i, activity in enumerate(self._activity_list):
+            if activity["id"] == id:
+                print('Are you sure you want to delete this item? y/n')
+                choice = input(">").lower()
+                match choice:
+                    case 'y':
+                        del self._activity_list[i]
+                        return
+                    case 'n':
+                        print(f'{CLIC.WRN}Aborting...{CLIC.CLR}')
+                        return
+                    case _:
+                        print(f'{CLIC.WRN}ERROR: Unexpected value.{CLIC.CLR}')
+                        return
+
+        print(f'{CLIC.WRN}ERROR: Item of that id does not exist.{CLIC.CLR}')
+        return
+
+        # find index of the object with an id of ID
+        # delete that object from the list
 
     def return_balance(self):
         balance = 0
@@ -35,14 +53,3 @@ class Tracker():
             balance += activity['weight'] * activity['length']
 
         return balance
-
-    def read_json(self):
-        with open('list.json', 'r') as file:
-            data = json.load(file)
-
-        print(data)
-        return data
-
-    def write_json(self, data):
-        with open('list.json', 'w') as file:
-            data = json.dump(file, data)

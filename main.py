@@ -28,6 +28,8 @@ def main():
                     TDS.help()
                 case 'add':
                     TDS.add_activity()
+                case 'del':
+                    TDS.delete_activity()
                 case 'list':
                     TDS.list_activities()
                 case _:

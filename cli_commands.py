@@ -61,6 +61,15 @@ class cli_cmds():
         activity_tracker.add_activity(new_activity)
         self._current_balance = activity_tracker.return_balance()
 
+    def delete_activity(self):
+        print(f'{CLIC.CMT} ID of the item you want to delete: {CLIC.CLR}')
+        id = int(input('>'))
+        if type(id) is int:
+            activity_tracker.delete_activity(id - 1)
+        else:
+            print('')
+            print(f'{CLIC.WRN}ERROR: Invalid input{CLIC.CLR}')
+
     def list_activities(self):
         activity_tracker.list_activities()
 
@@ -68,6 +77,7 @@ class cli_cmds():
 
         print(f'{CLIC.OKB}Available commands:')
         print(f'{CLIC.CMT}"add"{CLIC.CLR} - add activity')
+        print(f'{CLIC.CMT}"del"{CLIC.CLR} - delete activity')
         print(f'{CLIC.CMT}"list"{CLIC.CLR} - list registered activities')
         print(f'{CLIC.CMT}"time"{CLIC.CLR} - print current time')
         print(f'{CLIC.CMT}"help"{CLIC.CLR} - view available commands')
