@@ -8,6 +8,10 @@ class Tracker():
     _next_id = 0
     _activity_list = []
 
+    def __init__(self) -> None:
+        self._activity_list = self.__read_json()
+        self._next_id = len(self._activity_list)
+
     def add_activity(self, activity):
 
         new_activity = {
@@ -18,12 +22,14 @@ class Tracker():
         }
         self._next_id += 1
         self._activity_list.append(new_activity)
+        self.__write_json()
 
     def list_activities(self):
         for activity in self._activity_list:
             print(
                 f"{activity['id'] + 1}.\t\"{activity['name']}\":\t {activity['length']}")
         print()
+        print(self.__read_json())
 
     def delete_activity(self, id):
         for i, activity in enumerate(self._activity_list):
@@ -53,3 +59,14 @@ class Tracker():
             balance += activity['weight'] * activity['length']
 
         return balance
+
+    def __read_json(self):
+        data_file = open('activities.json', 'r', encoding='utf-8')
+        data = json.load(data_file)
+        data_file.close()
+        return data
+
+    def __write_json(self):
+        data_file = open('activities.json', 'w+', encoding='utf-8')
+        json.dump(self._activity_list, data_file)
+        data_file.close()
