@@ -65,7 +65,7 @@ class cli_cmds():
         print(f'{CLIC.CMT} ID of the item you want to delete: {CLIC.CLR}')
         id = int(input('>'))
         if type(id) is int:
-            activity_tracker.delete_activity(id - 1)
+            activity_tracker.delete_activity(id)
         else:
             print('')
             print(f'{CLIC.WRN}ERROR: Invalid input{CLIC.CLR}')
