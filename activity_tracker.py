@@ -26,7 +26,7 @@ class Tracker():
     def list_activities(self) -> None:
         for activity in self._activity_list:
             print(
-                f"{activity['id']}.\t\"{activity['name']}\":\t {activity['length']}\n")
+                f"{activity['id']}.\t\"{activity['name'][0:15]}{ '...' if len(activity['name']) > 15 else ''}\":\t {activity['length']}\n")
 
     def delete_activity(self, id) -> None:
         for i, activity in enumerate(self._activity_list):
