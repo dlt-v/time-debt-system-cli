@@ -7,7 +7,7 @@ TDS = cli_cmds()
 CLIC = cli_colors()
 
 
-def main():
+def main() -> None:
     program_status = True
     CLIC.clear()
     TDS.header()

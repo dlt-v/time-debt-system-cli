@@ -1,4 +1,5 @@
 from datetime import datetime
+import runtime_types
 import os
 
 from cli_colors import cli_colors
@@ -31,10 +32,15 @@ class cli_cmds():
         CLIC.clear()
 
     def add_activity(self) -> None:
-        new_activity = {}
+        new_activity: runtime_types.Activity = {
+            'name': '',
+            'length': 0,
+            'weight': 0
+        }
         print(f'{CLIC.CMT} Name / Comment: {CLIC.CLR}')
         name = input('>')
-        new_activity.update({'name': name})
+        # new_activity.update({'name': name})
+        new_activity['name'] = name
 
         print(f'{CLIC.CMT} Category of output activity: {CLIC.CLR}')
         print(f'1 - University')
@@ -44,26 +50,31 @@ class cli_cmds():
         category = int(input('>'))
         match category:
             case 1:
-                new_activity.update({'weight': 0.5})
+                # new_activity.update({'weight': 0.5})
+                new_activity['weight'] = 0.5
             case 2:
-                new_activity.update({'weight': 0.25})
+                # new_activity.update({'weight': 0.25})
+                new_activity['weight'] = 0.5
             case 3:
-                new_activity.update({'weight': 0.25})
+                # new_activity.update({'weight': 0.25})
+                new_activity['weight'] = 0.5
             case 4:
-                new_activity.update({'weight': 0.25})
+                # new_activity.update({'weight': 0.25})
+                new_activity['weight'] = 0.5
             case _:
                 print(f'{CLIC.WRN}ERROR: Unexpected value.{CLIC.CLR}')
                 return
 
         print(f'{CLIC.CMT} Length (in hours): {CLIC.CLR}')
         length = float(input('>'))
-        new_activity.update({'length': length})
+        # new_activity.update({'length': length})
+        new_activity['length'] = length
         activity_tracker.add_activity(new_activity)
         self._current_balance = activity_tracker.return_balance()
 
     def delete_activity(self) -> None:
         print(f'{CLIC.CMT} ID of the item you want to delete: {CLIC.CLR}')
-        id = int(input('>'))
+        id: int = int(input('>'))
         if type(id) is int:
             activity_tracker.delete_activity(id)
         else:

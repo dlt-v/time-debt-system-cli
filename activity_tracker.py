@@ -1,4 +1,5 @@
 import json
+import runtime_types
 from cli_colors import cli_colors
 
 CLIC = cli_colors()
@@ -11,7 +12,7 @@ class Tracker():
     def __init__(self) -> None:
         self.__update_from_json()
 
-    def add_activity(self, activity) -> None:
+    def add_activity(self, activity: runtime_types.Activity) -> None:
 
         new_activity = {
             'id': self._next_id,
@@ -28,7 +29,7 @@ class Tracker():
             print(
                 f"{activity['id']}.\t\"{activity['name'][0:15]}{ '...' if len(activity['name']) > 15 else ''}\":\t {activity['length']}\n")
 
-    def delete_activity(self, id) -> None:
+    def delete_activity(self, id: int) -> None:
         for i, activity in enumerate(self._activity_list):
             if activity["id"] == id:
                 print('Are you sure you want to delete this item? y/n')
