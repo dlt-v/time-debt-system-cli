@@ -50,16 +50,12 @@ class cli_cmds():
         category = int(input('>'))
         match category:
             case 1:
-                # new_activity.update({'weight': 0.5})
                 new_activity['weight'] = 0.5
             case 2:
-                # new_activity.update({'weight': 0.25})
                 new_activity['weight'] = 0.5
             case 3:
-                # new_activity.update({'weight': 0.25})
                 new_activity['weight'] = 0.5
             case 4:
-                # new_activity.update({'weight': 0.25})
                 new_activity['weight'] = 0.5
             case _:
                 print(f'{CLIC.WRN}ERROR: Unexpected value.{CLIC.CLR}')
@@ -67,7 +63,6 @@ class cli_cmds():
 
         print(f'{CLIC.CMT} Length (in hours): {CLIC.CLR}')
         length = float(input('>'))
-        # new_activity.update({'length': length})
         new_activity['length'] = length
         activity_tracker.add_activity(new_activity)
         self._current_balance = activity_tracker.return_balance()
