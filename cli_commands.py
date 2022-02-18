@@ -39,7 +39,6 @@ class cli_cmds():
         }
         print(f'{CLIC.CMT} Name / Comment: {CLIC.CLR}')
         name = input('>')
-        # new_activity.update({'name': name})
         new_activity['name'] = name
 
         print(f'{CLIC.CMT} Category of output activity: {CLIC.CLR}')
