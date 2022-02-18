@@ -1,20 +1,21 @@
 import json
 import runtime_types
+from typing import List
 from cli_colors import cli_colors
 
 CLIC = cli_colors()
 
 
 class Tracker():
-    _next_id = 0
-    _activity_list = []
+    _next_id: int = 0
+    _activity_list: List[runtime_types.Activity] = []
 
     def __init__(self) -> None:
         self.__update_from_json()
 
-    def add_activity(self, activity: runtime_types.Activity) -> None:
+    def add_activity(self, activity: runtime_types.NewActivity) -> None:
 
-        new_activity = {
+        new_activity: runtime_types.Activity = {
             'id': self._next_id,
             'name': activity['name'],
             'weight': activity['weight'],

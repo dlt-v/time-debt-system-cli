@@ -32,7 +32,7 @@ class cli_cmds():
         CLIC.clear()
 
     def add_activity(self) -> None:
-        new_activity: runtime_types.Activity = {
+        new_activity: runtime_types.NewActivity = {
             'name': '',
             'length': 0,
             'weight': 0
