@@ -11,7 +11,7 @@ activity_tracker = Tracker()
 class cli_cmds():
     _current_balance = activity_tracker.return_balance()
 
-    def header(self):
+    def header(self) -> None:
         self.__cls()
         print(f'{CLIC.HDR}TDS_CLI v0.1{CLIC.CLR}')
         print(
@@ -25,12 +25,12 @@ class cli_cmds():
         elif self._current_balance > 0:
             return f'{CLIC.OKG}{self._current_balance}'
 
-    def print_time(self):
+    def print_time(self) -> None:
         now = datetime.now()
         print(f'{CLIC.CMT}It\'s {now.hour}:{now.minute}.')
         CLIC.clear()
 
-    def add_activity(self):
+    def add_activity(self) -> None:
         new_activity = {}
         print(f'{CLIC.CMT} Name / Comment: {CLIC.CLR}')
         name = input('>')
@@ -61,7 +61,7 @@ class cli_cmds():
         activity_tracker.add_activity(new_activity)
         self._current_balance = activity_tracker.return_balance()
 
-    def delete_activity(self):
+    def delete_activity(self) -> None:
         print(f'{CLIC.CMT} ID of the item you want to delete: {CLIC.CLR}')
         id = int(input('>'))
         if type(id) is int:
@@ -70,29 +70,33 @@ class cli_cmds():
             print('')
             print(f'{CLIC.WRN}ERROR: Invalid input{CLIC.CLR}')
 
-    def list_activities(self):
+    def list_activities(self) -> None:
         activity_tracker.list_activities()
 
-    def help(self):
+    def wipe(self) -> None:
+        activity_tracker.wipe()
 
+    def help(self) -> None:
+        # prints all the available commands to the console.
         print(f'{CLIC.OKB}Available commands:')
         print(f'{CLIC.CMT}"add"{CLIC.CLR} - add activity')
         print(f'{CLIC.CMT}"del"{CLIC.CLR} - delete activity')
         print(f'{CLIC.CMT}"list"{CLIC.CLR} - list registered activities')
         print(f'{CLIC.CMT}"time"{CLIC.CLR} - print current time')
         print(f'{CLIC.CMT}"help"{CLIC.CLR} - view available commands')
+        print(f'{CLIC.CMT}"wipe"{CLIC.CLR} - delete every activity')
         print(f'{CLIC.CMT}"exit"{CLIC.CLR} - quit interface')
         CLIC.clear()
 
-    def unknown_command(self):
+    def unknown_command(self) -> None:
         print(
             f'{CLIC.WRN}ERROR: Unknown command.{CLIC.CLR}')
 
-    def keyboard_interrupt(self):
+    def keyboard_interrupt(self) -> None:
         print(f'{CLIC.WRN}ERROR: Unexpected interrupt.{CLIC.CLR}')
         print(f'{CLIC.CMT}Exiting program with flag 1.{CLIC.CLR}')
 
-    def __cls(self):
+    def __cls(self) -> None:
         command = 'clear'
         if os.name in ('nt', 'dos'):  # If Machine is running on Windows, use cls
             command = 'cls'

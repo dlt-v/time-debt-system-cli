@@ -48,6 +48,19 @@ class Tracker():
         print(f'{CLIC.WRN}ERROR: Item of id = {id} does not exist.{CLIC.CLR}')
         return
 
+    def wipe(self) -> None:
+        print('Are you sure you want to wipe every activity? y/n')
+        choice: str = input(">").lower()
+        match choice:
+            case 'y':
+                self._activity_list = []
+                self.__write_json()
+                print('Memory wiped.')
+            case 'n':
+                print(f'{CLIC.WRN}Aborting...{CLIC.CLR}')
+            case _:
+                print(f'{CLIC.WRN}ERROR: Unexpected value.{CLIC.CLR}')
+
     def return_balance(self) -> float:
         balance: float = 0.
         for activity in self._activity_list:

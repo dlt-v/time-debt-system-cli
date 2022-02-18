@@ -32,6 +32,8 @@ def main():
                     TDS.delete_activity()
                 case 'list':
                     TDS.list_activities()
+                case 'wipe':
+                    TDS.wipe()
                 case _:
                     TDS.unknown_command()
         except KeyboardInterrupt:
