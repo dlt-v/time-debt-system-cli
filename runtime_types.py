@@ -9,3 +9,4 @@ class NewActivity(TypedDict):
 
 class Activity(NewActivity):
     id: int
+    time_added: str

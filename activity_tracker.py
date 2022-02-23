@@ -1,6 +1,7 @@
 import json
 import runtime_types
 from typing import List
+import datetime
 from cli_colors import cli_colors
 
 CLIC = cli_colors()
@@ -20,6 +21,8 @@ class Tracker():
             'name': activity['name'],
             'weight': activity['weight'],
             'length': activity['length'],
+            # hour/minutes/day of the week/day-month/month/year
+            'time_added': datetime.datetime.now().strftime("%H/%M/%w/%d/%m/%Y")
         }
         self._next_id += 1
         self._activity_list.append(new_activity)
@@ -27,8 +30,14 @@ class Tracker():
 
     def list_activities(self) -> None:
         for activity in self._activity_list:
+            activity_time: datetime.datetime = datetime.datetime.strptime(
+                activity['time_added'], "%H/%M/%w/%d/%m/%Y")
+            print(activity_time)
+            print(datetime.datetime.now())
+            delta: datetime.timedelta = datetime.datetime.now() - activity_time
+            # print(delta.)
             print(
-                f"{activity['id']}.\t\"{activity['name'][0:15]}{ '...' if len(activity['name']) > 15 else ''}\":\t {activity['length']}\n")
+                f"{activity['id']}.\t\"{activity['name'][0:15]}{ '...' if len(activity['name']) > 15 else ''}\":\t{activity['length']}\t{activity['time_added']}\n")
 
     def delete_activity(self, id: int) -> None:
         for i, activity in enumerate(self._activity_list):
