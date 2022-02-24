@@ -29,7 +29,11 @@ class Tracker():
         self.__write_json()
 
     def list_activities(self) -> None:
-        for activity in self._activity_list:
+
+        print(
+            f"ID\tLength\tTime added\tName\n")
+
+        for activity in self._activity_list[::-1]:
 
             activity_time: datetime.datetime = datetime.datetime.strptime(
                 activity['time_added'], "%H/%M/%w/%d/%m/%Y")
@@ -39,7 +43,7 @@ class Tracker():
             time_stamp: str = ''
 
             if delta.days == 0:
-                time_stamp = f'{self.format_time(activity_time.hour + 1)}:{self.format_time(activity_time.minute + 1)}'
+                time_stamp = f'{self.format_time(activity_time.hour + 1)}:{self.format_time(activity_time.minute + 1)}\t'
             elif delta.days == 1:
                 time_stamp = 'yesterday'
             elif delta.days < 7:
@@ -48,7 +52,7 @@ class Tracker():
                 time_stamp = activity_time.strftime('%d.%m.%Y')
 
             print(
-                f"{activity['id']}.\t\"{activity['name'][0:15]}{ '...' if len(activity['name']) > 15 else ''}\":\t{activity['length']}\t{time_stamp}\n")
+                f"{activity['id']}.\t{activity['length']}\t{time_stamp}\t{activity['name'][0:15]}{ '...' if len(activity['name']) > 15 else ''}\n")
 
     def delete_activity(self, id: int) -> None:
         for i, activity in enumerate(self._activity_list):
