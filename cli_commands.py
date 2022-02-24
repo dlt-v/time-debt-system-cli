@@ -11,6 +11,12 @@ activity_tracker = Tracker()
 
 class cli_cmds():
     _current_balance = activity_tracker.return_balance()
+    _weights = {
+        'university': 1,
+        'programming': 1,
+        'reading': .5,
+        'hobby': .5,
+    }
 
     def header(self) -> None:
         self.__cls()
@@ -42,23 +48,16 @@ class cli_cmds():
         new_activity['name'] = name
 
         print(f'{CLIC.CMT} Category of output activity: {CLIC.CLR}')
-        print(f'1 - University')
-        print(f'2 - Hobby programming')
-        print(f'3 - Maintenance/Chores')
-        print(f'4 - Reading')
-        category = int(input('>'))
-        match category:
-            case 1:
-                new_activity['weight'] = 0.5
-            case 2:
-                new_activity['weight'] = 0.5
-            case 3:
-                new_activity['weight'] = 0.5
-            case 4:
-                new_activity['weight'] = 0.5
-            case _:
-                print(f'{CLIC.WRN}ERROR: Unexpected value.{CLIC.CLR}')
-                return
+        for i, key in enumerate(self._weights):
+            print(f'{i} - {key}')
+
+        choice = int(input('>'))
+        if choice in range(len(self._weights)):
+            print(enumerate(self._weights))
+            # TODO: pick float value from dictionary, how to get nth element in dictionary?
+        else:
+            print(f'{CLIC.WRN}ERROR: Unexpected value.{CLIC.CLR}')
+            return
 
         print(f'{CLIC.CMT} Length (in hours): {CLIC.CLR}')
         length = float(input('>'))
