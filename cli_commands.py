@@ -59,23 +59,31 @@ class cli_cmds():
         activity_tracker.add_activity(new_activity)
         self._current_balance = activity_tracker.return_balance()
 
-    def pomodoro(self) -> None:
+    def pomodoro(self, name: str = '', category: int = -1, length: int = -1) -> None:
         new_activity: runtime_types.NewActivity = {
             'name': '',
             'length': 0,
             'weight': 0
         }
-        data = self.__choose_category()
-        if len(data[0]) == 0 or len(data[1]) == 0:
-            print(f'{CLIC.WRN}ERROR: Unexpected value.{CLIC.CLR}')
-            return
 
-        new_activity['name'] = data[0]
-        new_activity['weight'] = float(data[1])
+        if(len(name) == 0):
+            data = self.__choose_category()
+            if len(data[0]) == 0 or len(data[1]) == 0:
+                print(f'{CLIC.WRN}ERROR: Unexpected value.{CLIC.CLR}')
+                return
 
-        print(f'{CLIC.CMT}Enter length of the pomodoro (in minutes):{CLIC.CLR}')
-        time: int = int(input('>'))
+            new_activity['name'] = data[0]
+            new_activity['weight'] = float(data[1])
+
+            print(f'{CLIC.CMT}Enter length of the pomodoro (in minutes):{CLIC.CLR}')
+            time: int = int(input('>'))
+        else:
+            new_activity['name'] = name
+            new_activity['weight'] = float(category)
+            time = length
+
         current_time = 0
+        os.system('mode con: cols=30 lines=3')
 
         while current_time <= (time * 60):
 
@@ -92,9 +100,10 @@ class cli_cmds():
             current_time += 1
             self.__cls()
 
+        os.system('mode con: cols=80 lines=15')
         print(f'{CLIC.OKG}Pomodoro finished!{CLIC.CLR}')
         print(
-            f'{CLIC.CMT}Activity \"{new_activity["name"]}\" added to activity list.!{CLIC.CLR}')
+            f'{CLIC.CMT}Activity \"{new_activity["name"]}\" added to activity list.{CLIC.CLR}')
         new_activity['length'] = round(time / 60, 1)
         activity_tracker.add_activity(new_activity)
         self._current_balance = activity_tracker.return_balance()
@@ -118,7 +127,7 @@ class cli_cmds():
         # prints all the available commands to the console.
         print(f'{CLIC.OKB}Available commands:')
         print(f'{CLIC.CMT}"add"{CLIC.CLR} - add activity')
-        print(f'{CLIC.CMT}"pom"{CLIC.CLR} - start a pomodoro session')
+        print(f'{CLIC.CMT}"pom"{CLIC.CLR} - start a pomodoro session {CLIC.OKC}(f_cmd name category minutes){CLIC.CLR}')
         print(f'{CLIC.CMT}"del"{CLIC.CLR} - delete activity')
         print(f'{CLIC.CMT}"list"{CLIC.CLR} - list registered activities')
         print(f'{CLIC.CMT}"time"{CLIC.CLR} - print current time')

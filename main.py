@@ -16,7 +16,8 @@ def main() -> None:
         try:
             print(
                 f'{CLIC.CLR}Waiting for command... (Use "help" to see available commands.)')
-            command = input('>')
+            command_line = input('>').split()
+            command = command_line[0]
             TDS.header()
             match command:
                 case 'exit':
@@ -29,7 +30,16 @@ def main() -> None:
                 case 'add':
                     TDS.add_activity()
                 case 'pom':
-                    TDS.pomodoro()
+
+                    if(len(command_line) > 3):
+                        try:
+                            TDS.pomodoro(command_line[1], int(
+                                command_line[2]), int(command_line[3]))
+                        except:
+                            print(
+                                f'{CLIC.FAIL}ERROR: Invalid arguments{CLIC.CLR}')
+                    else:
+                        TDS.pomodoro()
                 case 'del':
                     TDS.delete_activity()
                 case 'list':
