@@ -1,6 +1,7 @@
 from datetime import datetime
 from typing import List
 from time import sleep  # for pomodoro
+# from playsound import playsound
 import runtime_types
 import os
 
@@ -83,12 +84,14 @@ class cli_cmds():
             time = length
 
         current_time = 0
-        os.system('mode con: cols=30 lines=3')
+        header = f'Activity:{CLIC.OKC} {new_activity["name"]}{CLIC.CLR}'
+        command_line_width = max(18, len(header))
+        os.system(f'mode con: cols={command_line_width} lines=5')
 
         while current_time <= (time * 60):
 
             print(f'{CLIC.HDR}TDS POMIDORO{CLIC.CLR}')
-            print(f'Activity:{CLIC.OKC} {new_activity["name"]}{CLIC.CLR}')
+            print(header)
 
             time_passed = f'{activity_tracker.format_time(current_time // 60)}:{activity_tracker.format_time(current_time % 60)}'
             print(f'Time passed: {CLIC.OKC}{time_passed}{CLIC.CLR}')
@@ -101,10 +104,11 @@ class cli_cmds():
             self.__cls()
 
         os.system('mode con: cols=80 lines=15')
+        # TODO: playsound.playsound('bell.wav')
         print(f'{CLIC.OKG}Pomodoro finished!{CLIC.CLR}')
         print(
             f'{CLIC.CMT}Activity \"{new_activity["name"]}\" added to activity list.{CLIC.CLR}')
-        new_activity['length'] = round(time / 60, 1)
+        new_activity['length'] = round(time / 60, 2)
         activity_tracker.add_activity(new_activity)
         self._current_balance = activity_tracker.return_balance()
 

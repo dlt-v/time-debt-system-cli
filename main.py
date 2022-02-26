@@ -35,9 +35,12 @@ def main() -> None:
                         try:
                             TDS.pomodoro(command_line[1], int(
                                 command_line[2]), int(command_line[3]))
-                        except:
+                        except TypeError:
                             print(
                                 f'{CLIC.FAIL}ERROR: Invalid arguments{CLIC.CLR}')
+                        except:
+                            print(
+                                f'{CLIC.FAIL}ERROR: Oops! Something went wrong...{CLIC.CLR}')
                     else:
                         TDS.pomodoro()
                 case 'del':
