@@ -75,11 +75,27 @@ class cli_cmds():
 
         print(f'{CLIC.CMT}Enter length of the pomodoro (in minutes):{CLIC.CLR}')
         time: int = int(input('>'))
-        time *= 60  # convert time to seconds
         current_time = 0
-        # while current_time <= (time * 60):
-        #     pass
 
+        while current_time <= (time * 60):
+
+            print(f'{CLIC.HDR}TDS POMIDORO{CLIC.CLR}')
+            print(f'Activity:{CLIC.OKC} {new_activity["name"]}{CLIC.CLR}')
+
+            time_passed = f'{activity_tracker.format_time(current_time // 60)}:{activity_tracker.format_time(current_time % 60)}'
+            print(f'Time passed: {CLIC.OKC}{time_passed}{CLIC.CLR}')
+
+            time_left = f'{activity_tracker.format_time((time * 60 - current_time) // 60)}:{activity_tracker.format_time((time * 60 - current_time) % 60)}'
+            print(f'Time left: {CLIC.OKC}{time_left}{CLIC.CLR}')
+
+            sleep(1)
+            current_time += 1
+            self.__cls()
+
+        print(f'{CLIC.OKG}Pomodoro finished!{CLIC.CLR}')
+        print(
+            f'{CLIC.CMT}Activity \"{new_activity["name"]}\" added to activity list.!{CLIC.CLR}')
+        new_activity['length'] = round(time / 60, 1)
         activity_tracker.add_activity(new_activity)
         self._current_balance = activity_tracker.return_balance()
 
