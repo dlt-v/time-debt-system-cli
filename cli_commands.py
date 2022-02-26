@@ -50,11 +50,15 @@ class cli_cmds():
         print(f'{CLIC.CMT} Category of output activity: {CLIC.CLR}')
         for i, key in enumerate(self._weights):
             print(f'{i} - {key}')
+        print(f'{len(self._weights.keys()) + 1} - custom')
 
         choice = int(input('>'))
         if choice in range(len(self._weights)):
-            print(enumerate(self._weights))
-            # TODO: pick float value from dictionary, how to get nth element in dictionary?
+            list_of_keys = list(self._weights.keys())
+            new_activity['weight'] = self._weights[list_of_keys[choice]]
+        elif choice == (len(self._weights.keys()) + 1):
+            print(f'{CLIC.CMT} Add custom weight (float value): {CLIC.CLR}')
+            new_activity['weight'] = float(input('>'))
         else:
             print(f'{CLIC.WRN}ERROR: Unexpected value.{CLIC.CLR}')
             return

@@ -52,7 +52,9 @@ class Tracker():
                 time_stamp = activity_time.strftime('%d.%m.%Y')
 
             print(
-                f"{activity['id']}.\t{activity['length']}\t{time_stamp}\t{activity['name'][0:15]}{ '...' if len(activity['name']) > 15 else ''}\n")
+                f"{activity['id']}.\t{activity['length']}\t{time_stamp}\t{activity['name'][0:15]}{ '...' if len(activity['name']) > 15 else ''}")
+
+        print("\n")
 
     def delete_activity(self, id: int) -> None:
         for i, activity in enumerate(self._activity_list):
