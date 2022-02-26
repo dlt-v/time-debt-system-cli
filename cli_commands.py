@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import List
 import runtime_types
 import os
 
@@ -43,29 +44,46 @@ class cli_cmds():
             'length': 0,
             'weight': 0
         }
-        print(f'{CLIC.CMT} Name / Comment: {CLIC.CLR}')
-        name = input('>')
-        new_activity['name'] = name
+        # print(f'{CLIC.CMT} Name / Comment: {CLIC.CLR}')
+        # name = input('>')
+        # new_activity['name'] = name
 
-        print(f'{CLIC.CMT} Category of output activity: {CLIC.CLR}')
-        for i, key in enumerate(self._weights):
-            print(f'{i} - {key}')
-        print(f'{len(self._weights.keys()) + 1} - custom')
+        # print(f'{CLIC.CMT} Category of output activity: {CLIC.CLR}')
+        # for i, key in enumerate(self._weights):
+        #     print(f'{i} - {key}')
+        # print(f'{len(self._weights.keys()) + 1} - custom')
 
-        choice = int(input('>'))
-        if choice in range(len(self._weights)):
-            list_of_keys = list(self._weights.keys())
-            new_activity['weight'] = self._weights[list_of_keys[choice]]
-        elif choice == (len(self._weights.keys()) + 1):
-            print(f'{CLIC.CMT} Add custom weight (float value): {CLIC.CLR}')
-            new_activity['weight'] = float(input('>'))
-        else:
+        # choice = int(input('>'))
+        # if choice in range(len(self._weights)):
+        #     list_of_keys = list(self._weights.keys())
+        #     new_activity['weight'] = self._weights[list_of_keys[choice]]
+        # elif choice == (len(self._weights.keys()) + 1):
+        #     print(f'{CLIC.CMT} Add custom weight (float value): {CLIC.CLR}')
+        #     new_activity['weight'] = float(input('>'))
+        # else:
+        #     print(f'{CLIC.WRN}ERROR: Unexpected value.{CLIC.CLR}')
+        #     return
+        data = self.__choose_category()
+        if len(data[0]) == 0 or len(data[1]):
             print(f'{CLIC.WRN}ERROR: Unexpected value.{CLIC.CLR}')
             return
+
+        new_activity['name'] = data[0]
+        new_activity['weight'] = float(data[1])
 
         print(f'{CLIC.CMT} Length (in hours): {CLIC.CLR}')
         length = float(input('>'))
         new_activity['length'] = length
+        activity_tracker.add_activity(new_activity)
+        self._current_balance = activity_tracker.return_balance()
+
+    def pomodoro(self) -> None:
+        new_activity: runtime_types.NewActivity = {
+            'name': '',
+            'length': 0,
+            'weight': 0
+        }
+
         activity_tracker.add_activity(new_activity)
         self._current_balance = activity_tracker.return_balance()
 
@@ -88,6 +106,7 @@ class cli_cmds():
         # prints all the available commands to the console.
         print(f'{CLIC.OKB}Available commands:')
         print(f'{CLIC.CMT}"add"{CLIC.CLR} - add activity')
+        print(f'{CLIC.CMT}"pom"{CLIC.CLR} - start a pomodoro session')
         print(f'{CLIC.CMT}"del"{CLIC.CLR} - delete activity')
         print(f'{CLIC.CMT}"list"{CLIC.CLR} - list registered activities')
         print(f'{CLIC.CMT}"time"{CLIC.CLR} - print current time')
@@ -109,3 +128,24 @@ class cli_cmds():
         if os.name in ('nt', 'dos'):  # If Machine is running on Windows, use cls
             command = 'cls'
         os.system(command)
+
+    def __choose_category(self) -> List[str]:
+        print(f'{CLIC.CMT} Name / Comment: {CLIC.CLR}')
+        name = input('>')
+
+        print(f'{CLIC.CMT} Category of output activity: {CLIC.CLR}')
+        for i, key in enumerate(self._weights):
+            print(f'{i} - {key}')
+        print(f'{len(self._weights.keys()) + 1} - custom')
+
+        choice = int(input('>'))
+        if choice in range(len(self._weights)):
+            list_of_keys = list(self._weights.keys())
+            weight = str(self._weights[list_of_keys[choice]])
+        elif choice == (len(self._weights.keys()) + 1):
+            print(f'{CLIC.CMT} Add custom weight (float value): {CLIC.CLR}')
+            weight = input('>')
+        else:
+            return ['', '']
+
+        return [name, weight]
