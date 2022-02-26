@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import List
+from time import sleep  # for pomodoro
 import runtime_types
 import os
 
@@ -44,27 +45,8 @@ class cli_cmds():
             'length': 0,
             'weight': 0
         }
-        # print(f'{CLIC.CMT} Name / Comment: {CLIC.CLR}')
-        # name = input('>')
-        # new_activity['name'] = name
-
-        # print(f'{CLIC.CMT} Category of output activity: {CLIC.CLR}')
-        # for i, key in enumerate(self._weights):
-        #     print(f'{i} - {key}')
-        # print(f'{len(self._weights.keys()) + 1} - custom')
-
-        # choice = int(input('>'))
-        # if choice in range(len(self._weights)):
-        #     list_of_keys = list(self._weights.keys())
-        #     new_activity['weight'] = self._weights[list_of_keys[choice]]
-        # elif choice == (len(self._weights.keys()) + 1):
-        #     print(f'{CLIC.CMT} Add custom weight (float value): {CLIC.CLR}')
-        #     new_activity['weight'] = float(input('>'))
-        # else:
-        #     print(f'{CLIC.WRN}ERROR: Unexpected value.{CLIC.CLR}')
-        #     return
         data = self.__choose_category()
-        if len(data[0]) == 0 or len(data[1]):
+        if len(data[0]) == 0 or len(data[1]) == 0:
             print(f'{CLIC.WRN}ERROR: Unexpected value.{CLIC.CLR}')
             return
 
@@ -83,6 +65,20 @@ class cli_cmds():
             'length': 0,
             'weight': 0
         }
+        data = self.__choose_category()
+        if len(data[0]) == 0 or len(data[1]) == 0:
+            print(f'{CLIC.WRN}ERROR: Unexpected value.{CLIC.CLR}')
+            return
+
+        new_activity['name'] = data[0]
+        new_activity['weight'] = float(data[1])
+
+        print(f'{CLIC.CMT}Enter length of the pomodoro (in minutes):{CLIC.CLR}')
+        time: int = int(input('>'))
+        time *= 60  # convert time to seconds
+        current_time = 0
+        # while current_time <= (time * 60):
+        #     pass
 
         activity_tracker.add_activity(new_activity)
         self._current_balance = activity_tracker.return_balance()
@@ -147,5 +143,5 @@ class cli_cmds():
             weight = input('>')
         else:
             return ['', '']
-
+        print([name, weight])
         return [name, weight]
