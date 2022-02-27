@@ -1,4 +1,5 @@
 import sys
+import logging
 
 from cli_commands import cli_cmds
 from cli_colors import cli_colors
@@ -39,8 +40,9 @@ def main() -> None:
                             print(
                                 f'{CLIC.FAIL}ERROR: Invalid arguments{CLIC.CLR}')
                         except:
-                            print(
+                            logging.exception(
                                 f'{CLIC.FAIL}ERROR: Oops! Something went wrong...{CLIC.CLR}')
+
                     else:
                         TDS.pomodoro()
                 case 'del':

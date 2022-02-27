@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import List
 from time import sleep  # for pomodoro
-# from playsound import playsound
+from playsound import playsound
 import runtime_types
 import os
 
@@ -104,7 +104,8 @@ class cli_cmds():
             self.__cls()
 
         os.system('mode con: cols=80 lines=15')
-        # TODO: playsound.playsound('bell.wav')
+        audio_file = os.path.dirname(__file__) + '\\bell.wav'
+        playsound(audio_file)
         print(f'{CLIC.OKG}Pomodoro finished!{CLIC.CLR}')
         print(
             f'{CLIC.CMT}Activity \"{new_activity["name"]}\" added to activity list.{CLIC.CLR}')
