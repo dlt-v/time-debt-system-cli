@@ -29,11 +29,11 @@ class cli_cmds():
 
     def print_balance(self):
         if self._current_balance == 0:
-            return f'{CLIC.CMT}0'
+            return f'{CLIC.CMT}0 minutes'
         elif self._current_balance < 0:
             return f'{CLIC.WRN}{self._current_balance}'
         elif self._current_balance > 0:
-            return f'{CLIC.OKG}{self._current_balance}'
+            return f'{CLIC.OKG}{self._current_balance * 30} minutes'
 
     def print_time(self) -> None:
         now = datetime.now()
@@ -162,7 +162,7 @@ class cli_cmds():
         print(f'{CLIC.CMT} Category of output activity: {CLIC.CLR}')
         for i, key in enumerate(self._weights):
             print(f'{i} - {key}')
-        print(f'{len(self._weights.keys()) + 1} - custom')
+        print(f'{len(self._weights.keys())} - custom')
 
         choice = int(input('>'))
         if choice in range(len(self._weights)):
@@ -173,5 +173,4 @@ class cli_cmds():
             weight = input('>')
         else:
             return ['', '']
-        print([name, weight])
         return [name, weight]
