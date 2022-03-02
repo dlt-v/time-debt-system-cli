@@ -43,7 +43,7 @@ class Tracker():
             time_stamp: str = ''
 
             if delta.days == 0:
-                time_stamp = f'{self.format_time(activity_time.hour + 1)}:{self.format_time(activity_time.minute + 1)}\t'
+                time_stamp = f'{self.format_time(activity_time.hour)}:{self.format_time(activity_time.minute)}\t'
             elif delta.days == 1:
                 time_stamp = 'yesterday'
             elif delta.days < 7:
