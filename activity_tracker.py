@@ -90,8 +90,14 @@ class Tracker():
                 print(f'{CLIC.WRN}ERROR: Unexpected value.{CLIC.CLR}')
 
     def return_balance(self) -> float:
+        # balance is only to be calculated from today's activities
+        current_day: str = datetime.datetime.now().strftime("%d/%m/%Y")
         balance: float = 0.
-        for activity in self._activity_list:
+        for activity in self._activity_list[::-1]:
+            # traverse the list from the latest elements
+            # current format: 15/38/3/02/03/2022 - hours and minutes are padded
+            if (activity['time_added'][8:] != current_day):
+                break
             balance += activity['weight'] * activity['length']
 
         return balance
