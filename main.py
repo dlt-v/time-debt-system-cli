@@ -1,4 +1,5 @@
 import sys
+import os
 import logging
 
 from cli_commands import cli_cmds
@@ -9,6 +10,8 @@ CLIC = cli_colors()
 
 
 def main() -> None:
+    os.system('mode con: cols=80 lines=15')
+
     program_status = True
     CLIC.clear()
     TDS.header()

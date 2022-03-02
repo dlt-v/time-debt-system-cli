@@ -86,30 +86,36 @@ class cli_cmds():
         current_time = 0
         header = f'Activity:{CLIC.OKC} {new_activity["name"]}{CLIC.CLR}'
         command_line_width = max(18, len(header))
+        self.__cls()
         os.system(f'mode con: cols={command_line_width} lines=5')
+        try:
+            while current_time <= (time * 60):
 
-        while current_time <= (time * 60):
+                print(f'{CLIC.HDR}TDS POMIDORO{CLIC.CLR}')
+                print(header)
 
-            print(f'{CLIC.HDR}TDS POMIDORO{CLIC.CLR}')
-            print(header)
+                time_passed = f'{activity_tracker.format_time(current_time // 60)}:{activity_tracker.format_time(current_time % 60)}'
+                print(f'Time passed: {CLIC.OKC}{time_passed}{CLIC.CLR}')
 
-            time_passed = f'{activity_tracker.format_time(current_time // 60)}:{activity_tracker.format_time(current_time % 60)}'
-            print(f'Time passed: {CLIC.OKC}{time_passed}{CLIC.CLR}')
+                time_left = f'{activity_tracker.format_time((time * 60 - current_time) // 60)}:{activity_tracker.format_time((time * 60 - current_time) % 60)}'
+                print(f'Time left: {CLIC.OKC}{time_left}{CLIC.CLR}')
 
-            time_left = f'{activity_tracker.format_time((time * 60 - current_time) // 60)}:{activity_tracker.format_time((time * 60 - current_time) % 60)}'
-            print(f'Time left: {CLIC.OKC}{time_left}{CLIC.CLR}')
-
-            sleep(1)
-            current_time += 1
-            self.__cls()
-
+                sleep(1)
+                current_time += 1
+                self.__cls()
+        except:
+            os.system('mode con: cols=80 lines=15')
+            new_activity['length'] = round(current_time / 60 / 60, 2)
+            print(f'{CLIC.WRN}Pomodoro cut!{CLIC.CLR}')
         os.system('mode con: cols=80 lines=15')
         audio_file = os.path.dirname(__file__) + '\\bell.wav'
         playsound(audio_file)
         print(f'{CLIC.OKG}Pomodoro finished!{CLIC.CLR}')
+        print(round(current_time / 60 / 60, 2))
         print(
             f'{CLIC.CMT}Activity \"{new_activity["name"]}\" added to activity list.{CLIC.CLR}')
-        new_activity['length'] = round(time / 60, 2)
+        if (new_activity['length'] == 0):  # if pomodoro wasn't interrupted
+            new_activity['length'] = round(time / 60, 2)
         activity_tracker.add_activity(new_activity)
         self._current_balance = activity_tracker.return_balance()
 
@@ -127,6 +133,7 @@ class cli_cmds():
 
     def wipe(self) -> None:
         activity_tracker.wipe()
+        self._current_balance = activity_tracker.return_balance()
 
     def help(self) -> None:
         # prints all the available commands to the console.
