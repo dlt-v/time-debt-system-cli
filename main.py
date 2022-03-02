@@ -48,7 +48,14 @@ def main() -> None:
                 case 'del':
                     TDS.delete_activity()
                 case 'list':
-                    TDS.list_activities()
+                    if(len(command_line) > 1):
+                        try:
+                            TDS.list_activities(command_line[1])
+                        except:
+                            logging.exception(
+                                f'{CLIC.FAIL}ERROR: Oops! Something went wrong...{CLIC.CLR}')
+                    else:
+                        TDS.list_activities()
                 case 'wipe':
                     TDS.wipe()
                 case _:

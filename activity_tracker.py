@@ -28,13 +28,16 @@ class Tracker():
         self._activity_list.append(new_activity)
         self.__write_json()
 
-    def list_activities(self) -> None:
+    def list_activities(self, list_all: bool = False) -> None:
 
         print(
             f"ID\tLength\tTime added\tName\n")
+        
+        current_day: str = datetime.datetime.now().strftime("%d/%m/%Y")
 
         for activity in self._activity_list[::-1]:
-
+            if (not list_all and activity['time_added'][8:] != current_day):
+                break
             activity_time: datetime.datetime = datetime.datetime.strptime(
                 activity['time_added'], "%H/%M/%w/%d/%m/%Y")
 

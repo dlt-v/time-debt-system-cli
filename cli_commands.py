@@ -122,8 +122,8 @@ class cli_cmds():
             print('')
             print(f'{CLIC.WRN}ERROR: Invalid input{CLIC.CLR}')
 
-    def list_activities(self) -> None:
-        activity_tracker.list_activities()
+    def list_activities(self, all: str = '') -> None:
+        activity_tracker.list_activities(all == "all")
 
     def wipe(self) -> None:
         activity_tracker.wipe()
